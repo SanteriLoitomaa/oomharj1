@@ -24,7 +24,6 @@ public class Colours {
 	 * @.post !Colours.equals(new ArrayList<Colour>())
 	 */
 	@SuppressWarnings("unchecked")
-	@BeforeAll
 	public static void init() {
 		try {
 			FileInputStream file = new FileInputStream("Colours.txt");
@@ -60,7 +59,6 @@ public class Colours {
 	 * @param Colour c
 	 * @return true if can be used, otherwise false
 	 */
-	@Test
 	public static boolean canUseColour(Colour colour) {
 		if(colour == null) return false;
 		else if(colours.contains(colour)) return true;
@@ -73,7 +71,6 @@ public class Colours {
 	 * @param Colour c
 	 * @return true if can be used, otherwise false
 	 */
-	@Test
 	public static boolean canUseRandomColour(Colour colour) {
 		if(colour == null) return false;
 		else if(randomColours.contains(colour)) return true;
@@ -87,7 +84,6 @@ public class Colours {
 	 * 
 	 * @param colour (to add)
 	 */
-	@Test
 	public static void addColour(Colour colour){
 		if(colour == null) return;
 		colours.add(colour);
@@ -108,7 +104,6 @@ public class Colours {
 	 * 
 	 * @param colour (to add)
 	 */
-	@Test
 	public static void addRandomColour(Colour colour){
 		if(colour == null) return;
 		randomColours.add(colour);
@@ -118,9 +113,8 @@ public class Colours {
 	 * A method that will randomize colours for an ArrayList that contains a random amount of colours from the colours
 	 * ArrayList.
 	 * 
-	 * @.post The contents of the randomColours ArrayList changes.
+	 * @.post The contents of the randomColours ArrayList randomly changes.
 	 */
-	@Test
 	public static void createRandomColours() {
 		randomColours = new ArrayList<Colour>();
 		Random r = new Random();

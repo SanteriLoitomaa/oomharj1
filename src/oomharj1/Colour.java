@@ -26,7 +26,7 @@ public class Colour {
 	 * Returns true if the colours are the same.
 	 * 
 	 * @param colour
-	 * @return
+	 * @return true if the same Colour, false if not.
 	 */
 	@Test
 	public boolean equals(Colour colour) {
@@ -40,7 +40,7 @@ public class Colour {
 	
 	/**
 	 * Getter for the name of the colour.
-	 * @return
+	 * @return String colour
 	 */
 	public String getColour(){
 		return colour;
