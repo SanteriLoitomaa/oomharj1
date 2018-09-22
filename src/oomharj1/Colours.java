@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 public class Colours {
 	
 	static ArrayList<Colour> colours = new ArrayList<Colour>();
