@@ -9,7 +9,7 @@ public class Colour {
 	String colour;
 
 	/**
-	 * Creates a colour object.
+	 * Creates a Colour object.
 	 * 
 	 * @.post new Colour created.
 	 * 
@@ -24,8 +24,6 @@ public class Colour {
 	
 	/**
 	 * Returns true if the colours are the same.
-	 * 
-	 * @.post true
 	 * 
 	 * @param colour
 	 * @return
