@@ -10,57 +10,91 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 public class Colours {
 	
-	static ArrayList<String> Colours = new ArrayList<String>();
+	static ArrayList<Colour> colours = new ArrayList<Colour>();
+	static ArrayList<Colour> randomColours = new ArrayList<Colour>();
 	
 	/**
-	 * Creates the Colours.txt with the default 10 colours if it doesn't exsist and creates an ArrayList
-	 * out of it.
+	 * Creates the Colours.txt with the default 10 colours if it doesn't exsist and creates an ArrayList out of it.
 	 * 
-	 * @.post !Colours.equals(null or new ArrayList<String>())
+	 * @.post !Colours.equals(new ArrayList<Colour>())
 	 */
 	@SuppressWarnings("unchecked")
-	public static void Init() {
+	@BeforeAll
+	public static void init() {
 		try {
-			FileInputStream colours = new FileInputStream("Colours.txt");
-			ObjectInputStream load = new ObjectInputStream(colours);
-			Colours = (ArrayList<String>) load.readObject();
+			FileInputStream file = new FileInputStream("Colours.txt");
+			ObjectInputStream load = new ObjectInputStream(file);
+			colours = (ArrayList<Colour>) load.readObject();
 			load.close();
 		} catch (FileNotFoundException e) {
-			Colours = new ArrayList<String>(Arrays.asList("Red", "Blue", "Yellow", "Purple", "Green", "Orange",
-					"Brown", "Black", "Gray", "White"));
+			colours = new ArrayList<Colour>(Arrays.asList(new Colour("Red"), new Colour("Blue"), new Colour("Yellow"), new Colour("Purple"),
+					new Colour("Green"), new Colour("Orange"), new Colour("Brown"), new Colour("Black"), new Colour("Gray"),
+					new Colour("White")));
 			try {
-				FileOutputStream colours = new FileOutputStream("Colours.txt");
-				ObjectOutputStream save = new ObjectOutputStream(colours);
-				save.writeObject(Colours);
+				FileOutputStream file = new FileOutputStream("Colours.txt");
+				ObjectOutputStream save = new ObjectOutputStream(file);
+				save.writeObject(colours);
 				save.close();
 			} catch (IOException e1) {
 				
 			}
 		} catch (IOException e) {
-			Colours = new ArrayList<String>(Arrays.asList("Red", "Blue", "Yellow", "Purple", "Green", "Orange",
-					"Brown", "Black", "Gray", "White"));
+			colours = new ArrayList<Colour>(Arrays.asList(new Colour("Red"), new Colour("Blue"), new Colour("Yellow"), new Colour("Purple"),
+					new Colour("Green"), new Colour("Orange"), new Colour("Brown"), new Colour("Black"), new Colour("Gray"),
+					new Colour("White")));
 		} catch (ClassNotFoundException e) {
-			Colours = new ArrayList<String>(Arrays.asList("Red", "Blue", "Yellow", "Purple", "Green", "Orange",
-					"Brown", "Black", "Gray", "White"));
+			colours = new ArrayList<Colour>(Arrays.asList(new Colour("Red"), new Colour("Blue"), new Colour("Yellow"), new Colour("Purple"),
+					new Colour("Green"), new Colour("Orange"), new Colour("Brown"), new Colour("Black"), new Colour("Gray"),
+					new Colour("White")));
 		}
 	}
 	
 	/**
-	 * This method is used to add a colour to the Colours ArrayList.
+	 * This method returns true if the Colour can be used and false if it cannot be used.
 	 * 
-	 * @.pre !s.equals(null)
-	 * @.post Colours = OLD.Colours + colour
+	 * @param Colour c
+	 * @return true if can be used, otherwise false
+	 */
+	@Test
+	public static boolean canUseColour(Colour colour) {
+		if(colour == null) return false;
+		else if(colours.contains(colour)) return true;
+		return false;
+	}
+	
+	/**
+	 * This method returns true if the Colour can be used and false if it cannot be used.
+	 * 
+	 * @param Colour c
+	 * @return true if can be used, otherwise false
+	 */
+	@Test
+	public static boolean canUseRandomColour(Colour colour) {
+		if(colour == null) return false;
+		else if(randomColours.contains(colour)) return true;
+		return false;
+	}
+	
+	/**
+	 * This method is used to add a colour to the colours ArrayList.
+	 * 
+	 * @.post colours = OLD.colours + colour
 	 * 
 	 * @param colour (to add)
 	 */
-	public static void addColour(String colour){
-		Colours.add(colour);
+	@Test
+	public static void addColour(Colour colour){
+		if(colour == null) return;
+		colours.add(colour);
 		try {
 			FileOutputStream colours = new FileOutputStream("Colours.txt");
 			ObjectOutputStream save = new ObjectOutputStream(colours);
-			save.writeObject(Colours);
+			save.writeObject(colours);
 			save.close();
 		} catch (IOException e1) {
 			
@@ -68,27 +102,49 @@ public class Colours {
 	}
 	
 	/**
-	 * A getter for the Colours ArrayList.
+	 * This method is used to add a colour to the colours ArrayList.
 	 * 
-	 * @return Colours
+	 * @.post colours = OLD.colours + colour
+	 * 
+	 * @param colour (to add)
 	 */
-	public static ArrayList<String> getColours(){
-		return Colours;
+	@Test
+	public static void addRandomColour(Colour colour){
+		if(colour == null) return;
+		randomColours.add(colour);
 	}
 	
 	/**
-	 * A method that will return an ArrayList that contains a random amount of colours from the Colours
+	 * A method that will randomize colours for an ArrayList that contains a random amount of colours from the colours
 	 * ArrayList.
 	 * 
-	 * @return a random list of colours.
+	 * @.post The contents of the randomColours ArrayList changes.
 	 */
-	public static ArrayList<String> getRandomColours(){
-		ArrayList<String> ran = new ArrayList<String>();
+	@Test
+	public static void createRandomColours() {
+		randomColours = new ArrayList<Colour>();
 		Random r = new Random();
-		for(int i = r.nextInt(Colours.size()-1); i < Colours.size(); i++) {
-			String c = Colours.get(r.nextInt(Colours.size()));
-			if(!ran.contains(c)) ran.add(c);
+		for(int i = r.nextInt(colours.size()-1); i < colours.size(); i++) {
+			Colour c = colours.get(r.nextInt(colours.size()));
+			if(!randomColours.contains(c)) randomColours.add(c);
 		}
-		return ran;
+	}
+	
+	/**
+	 * A getter for the randomColours ArrayList.
+	 * 
+	 * @return randomColours
+	 */
+	public static ArrayList<Colour> getRandomColours(){
+		return randomColours;
+	}
+	
+	/**
+	 * A getter for the colours ArrayList.
+	 * 
+	 * @return colours
+	 */
+	public static ArrayList<Colour> getColours(){
+		return colours;
 	}
 }
